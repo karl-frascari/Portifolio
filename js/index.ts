@@ -1,0 +1,1 @@
+var oo: number;
