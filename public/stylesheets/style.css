@@ -1,8 +1,30 @@
+@import url(https://fonts.googleapis.com/css?family=Pacifico);
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  overflow: hidden;
 }
-
-a {
-  color: #00B7FF;
+section.home .row div {
+  height: 50%;
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
+}
+section.home .row div i {
+  font-size: 5vw;
+  vertical-align: bottom;
+}
+section.home .row div label {
+  cursor: pointer;
+  color: white;
+  font-family: 'Pacifico';
+  display: block;
+  text-align: center;
+  font-size: 4vw;
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+section.home .row div:hover {
+  transform: scale(1.05);
+  z-index: 100;
 }
