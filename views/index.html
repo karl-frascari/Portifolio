@@ -2,31 +2,32 @@
 
 <head>
     <title>My Portifolio</title>
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-route.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- inject:css -->
-    <link rel="stylesheet" href="/stylesheets/ol.css">
-    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/style.css">
+    <!-- endinject -->
+
+    <!-- inject:js -->
+    <script src="/all.js"></script>
     <!-- endinject -->
 </head>
 
-<body ng-app="myMaps">
+<body ng-app="portifolio">
     <div ng-view></div>
 </body>
+
 <footer>
-    <!-- inject:js -->
-    <script src="/angularApp.js"></script>
-    <script src="/scripts/01_jQuery.js"></script>
-    <script src="/scripts/bootstrap.js"></script>
-    <script src="/scripts/ol.js"></script>
-    <script src="/scripts/underscore.js"></script>
-    <script src="/modules/controllers/homeController.js"></script>
-    <script src="/modules/controllers/mapController.js"></script>
-    <script src="/modules/directives/home.js"></script>
-    <script src="/modules/directives/imageManager.js"></script>
+    <!-- scripts:js -->
+    <script src="/01_jQuery.js"></script>
+    <script src="/angular.min.js"></script>
+    <script src="/bootstrap.js"></script>
+    <script src="/ol.js"></script>
+    <script src="/ui-bootstrap-tpls-1.2.5.min.js"></script>
+    <script src="/underscore.js"></script>
     <!-- endinject -->
 </footer>
 
