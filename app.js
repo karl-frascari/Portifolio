@@ -12,12 +12,17 @@ mongoose.connect('mongodb://localhost/portifolio', function(err, db) {
     if (!err) {
         console.log('Connected to /portifolio!');
     } else {
-        console.dir(err); //failed to connect
+        console.dir(err);
     }
 
 });
 
 var app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(logger('dev'));
 
 //routes
 var routes = require('./routes/index');
@@ -31,16 +36,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
-
-app.use(express.static(path.join(process.cwd(), '/dist')));
+app.use(express.static(path.join(process.cwd(), '/www')));
 app.use(express.static(path.join(process.cwd(), '/scripts')));
 app.use(express.static(path.join(process.cwd(), '/public')));
 
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(logger('dev'));
 
 
 app.use(function(req, res, next) {

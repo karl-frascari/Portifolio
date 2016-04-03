@@ -4,8 +4,7 @@ var ObjectId = Schema.ObjectId;
 
 var pointSchema = new Schema({
   base64: String,
-  position: {type: String, 'default': '[0,0]'},
-  creationDate: {type: Date, 'default': Date.now},
+  position: String
 });
 
 module.exports = mongoose.model('Points', pointSchema);

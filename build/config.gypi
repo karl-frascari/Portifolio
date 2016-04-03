@@ -42,7 +42,7 @@
     "v8_random_seed": 0,
     "v8_use_snapshot": "true",
     "want_separate_host_toolset": 0,
-    "nodedir": "C:\\Users\\karl.frascari\\.node-gyp\\4.4.1",
+    "nodedir": "C:\\Users\\kaarl\\.node-gyp\\4.4.2",
     "copy_dev_lib": "true",
     "standalone_static_library": 1
   }

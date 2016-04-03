@@ -2,7 +2,7 @@ app.controller('mapController', ['$scope', 'baseRest', '$uibModal',
 
     ($scope, baseRest, $uibModal) => {
 
-        const actual_center = [8.516634, 47.400547];
+        const center = [8.516634, 47.400547];
 
         const baseUrl = window.location.host;
 
@@ -28,7 +28,7 @@ app.controller('mapController', ['$scope', 'baseRest', '$uibModal',
             ],
 
             view: new ol.View({
-                center: ol.proj.fromLonLat(actual_center),
+                center: ol.proj.fromLonLat(center),
                 zoom: 5,
                 enableRotation: false,
             })
@@ -40,7 +40,8 @@ app.controller('mapController', ['$scope', 'baseRest', '$uibModal',
 
                 let modalInstance = $uibModal.open({
                     animation: true,
-                    template: '<div class="modal-header"> <h3 class="modal-title">Im a modal!</h3> </div> <div class="modal-body"> <ul> <li ng-repeat="item in items"> <a href="#" ng-click="$event.preventDefault(); selected.item = item">{{ item }}</a> </li> </ul> Selected: <b>{{ selected.item }}</b> </div> <div class="modal-footer"> <button class="btn btn-primary" type="button" ng-click="ok()">OK</button> <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button> </div> ',
+                    templateUrl: '../partials/add-point-modal.html',
+                    controller: 'addPointModalController'
                 });
 
                 modalInstance.result.then(function(selectedItem) {

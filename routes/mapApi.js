@@ -1,12 +1,23 @@
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
 var router = express.Router();
 
 var Point = require('../models/Points');
 
 router.post('/point', function(req, res) {
-    new Point({ action: req.body.action, author: req.body.author }).save();
-    res.send({ 'new todo': req.body.action });
+
+    new Point({
+        base64: req.body.base64,
+        position: req.body.position,
+        creationDate: { type: Date, 'default': Date.now },
+    }).save();
+
+    res.send({ 'new point': req.body.action });
+
+    req.on('error', function(e) {
+        console.log('problem with request: ' + e.message);
+    });
 });
 
 router.get('/points', function(req, res) {

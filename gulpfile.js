@@ -13,8 +13,7 @@ var gulp = require("gulp"),
     es2015 = require('babel-preset-es2015'),
     sourcemaps = require('gulp-sourcemaps');
 
-var enviroment = 'development';
-var setTaskList = [];
+
 
 gulp.task('transpile', function() {
 
@@ -23,7 +22,7 @@ gulp.task('transpile', function() {
             presets: [es2015]
         }))
         .pipe(concat('all.js'))
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('www'));
 });
 
 
@@ -32,7 +31,8 @@ gulp.task('less', function() {
     return gulp.src('public/**/*.less')
         .pipe(less())
         .pipe(concat('style.css'))
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('www'))
+        .pipe(livereload());
 });
 
 
@@ -41,10 +41,10 @@ gulp.task('includePublic', ['transpile', 'less'], function() {
     var target = gulp.src('views/*.html');
 
     var sources = gulp.src(
-        ['dist/*.js', 'dist/*.css'], { read: false, relative: true }
+        ['www/*.js', 'www/*.css'], { read: false, relative: true }
     );
 
-    return target.pipe(inject(sources, { ignorePath: 'dist', addRootSlash: true }))
+    return target.pipe(inject(sources, { ignorePath: 'www', addRootSlash: true }))
         .pipe(gulp.dest(function(file) {
             return file.base;
         }));;
@@ -56,7 +56,7 @@ gulp.task('includeScripts', ['transpile', 'less', 'includePublic'], function() {
     var target = gulp.src('views/*.html');
 
     var sources = gulp.src(
-        ['scripts/*.js'], { read: false, relative: true }
+        ['scripts/*.js', '!scripts/angular.min.js'], { read: false, relative: true }
     );
 
     return target.pipe(inject(sources, { ignorePath: 'scripts', addRootSlash: true, name: 'scripts' }))
@@ -65,21 +65,20 @@ gulp.task('includeScripts', ['transpile', 'less', 'includePublic'], function() {
         }));;
 });
 
-gulp.task('watch', ['less', 'transpile', 'includeScripts', 'includePublic'], function() {
-
-    livereload.listen( );
+gulp.task('exec', ['less', 'transpile', 'includeScripts', 'includePublic'], function() {
 
     var stream = nodemon({
-        script: 'bin/server.js',
+        script: 'server/server.js',
         env: { 'NODE_ENV': 'development' }
     }).on('restart', function() {
-
+        console.log('Server restarted');
     });
 
     gulp.watch("public/**/*.js", ["transpile"]);
+    gulp.watch("public/**/*.less", ["less"]);
 
     return stream
 })
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['exec']);
 
