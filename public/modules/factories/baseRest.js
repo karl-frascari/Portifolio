@@ -12,7 +12,7 @@ app.factory('baseRest', ['$http', function ($http) {
                 put: function (params) {
                     return $http.put(baseUrl + params.url, { cache: false });
                 },
-                'delete': function (params) {
+                delete: function (params) {
                     return $http.delete(baseUrl + params.url, { cache: false });
                 }
             }

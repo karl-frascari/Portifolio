@@ -40,8 +40,6 @@ app.use(express.static(path.join(process.cwd(), '/www')));
 app.use(express.static(path.join(process.cwd(), '/scripts')));
 app.use(express.static(path.join(process.cwd(), '/public')));
 
-
-
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;

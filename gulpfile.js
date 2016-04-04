@@ -5,14 +5,13 @@ var gulp = require("gulp"),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
     rename = require('gulp-rename'),
-    livereload = require('gulp-livereload'),
     print = require('gulp-print'),
-    _ = require('underscore'),
     babel = require('gulp-babel'),
     concat = require('gulp-concat'),
+    livereload = require('gulp-livereload'),
     es2015 = require('babel-preset-es2015'),
-    sourcemaps = require('gulp-sourcemaps');
-
+    sourcemaps = require('gulp-sourcemaps'),
+    clean = require('gulp-clean');
 
 
 gulp.task('transpile', function() {
@@ -55,14 +54,24 @@ gulp.task('includeScripts', ['transpile', 'less', 'includePublic'], function() {
 
     var target = gulp.src('views/*.html');
 
-    var sources = gulp.src(
-        ['scripts/*.js', '!scripts/angular.min.js'], { read: false, relative: true }
-    );
+    gulp.src('www/lib', { read: false })
+        .pipe(clean({ force: true }));
 
-    return target.pipe(inject(sources, { ignorePath: 'scripts', addRootSlash: true, name: 'scripts' }))
-        .pipe(gulp.dest(function(file) {
-            return file.base;
-        }));;
+    gulp.src(['bower_components/**/*.js', 'bower_components/**/*.map', 'bower_components/**/*.css'])
+        .pipe(rename({ dirname: '' }))
+        .pipe(gulp.dest('www/lib'))
+        .on('end', function() {
+
+            var sources = gulp.src(
+                ['www/lib/*.*', '!www/lib/angular.min.js'], { read: false, relative: true }
+            );
+
+            return target.pipe(inject(sources, { ignorePath: 'www', addRootSlash: true, name: 'scripts' }))
+                .pipe(gulp.dest(function(file) {
+                    return file.base;
+                }));
+        });
+
 });
 
 gulp.task('exec', ['less', 'transpile', 'includeScripts', 'includePublic'], function() {
@@ -77,8 +86,7 @@ gulp.task('exec', ['less', 'transpile', 'includeScripts', 'includePublic'], func
     gulp.watch("public/**/*.js", ["transpile"]);
     gulp.watch("public/**/*.less", ["less"]);
 
-    return stream
+    return stream;
 })
 
 gulp.task('default', ['exec']);
-

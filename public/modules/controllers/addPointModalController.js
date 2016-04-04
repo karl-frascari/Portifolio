@@ -1,6 +1,6 @@
-app.controller('addPointModalController', ['$scope', 'baseRest', '$uibModal',
+app.controller('addPointModalController', ['$scope', 'baseRest', '$mdDialog',
 
-    ($scope, baseRest, $uibModal) => {
+    ($scope, baseRest, $mdDialog) => {
 
         $scope.data = 'none';
 
@@ -8,12 +8,19 @@ app.controller('addPointModalController', ['$scope', 'baseRest', '$uibModal',
 
         const mapApi = baseRest.dataService('http://' + baseUrl + '/map');
 
+        $scope.findFile = () => {
 
-        $scope.add = () => {
+            let input = angular.element('#fileInput');
+
+            if (input.length) {
+                input.click();
+            }
+        };
+
+        $scope.save = () => {
 
             let f = document.getElementById('file').files[0],
                 r = new FileReader();
-
 
             r.onloadend = (e) => {
 

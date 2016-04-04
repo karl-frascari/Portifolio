@@ -1,8 +1,6 @@
 'use strict';
 
-var app = angular.module('portifolio', ['ngRoute', 'ui.bootstrap']);
-
-console.log(app);
+var app = angular.module('portifolio', ['ngRoute', 'ui.bootstrap', 'ngMaterial']);
 
 app.config(['$routeProvider', function ($routeProvider) {
 
@@ -22,7 +20,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 }]);
 'use strict';
 
-app.controller('addPointModalController', ['$scope', 'baseRest', '$uibModal', function ($scope, baseRest, $uibModal) {
+app.controller('addPointModalController', ['$scope', 'baseRest', '$mdDialog', function ($scope, baseRest, $mdDialog) {
 
     $scope.data = 'none';
 
@@ -30,7 +28,16 @@ app.controller('addPointModalController', ['$scope', 'baseRest', '$uibModal', fu
 
     var mapApi = baseRest.dataService('http://' + baseUrl + '/map');
 
-    $scope.add = function () {
+    $scope.findFile = function () {
+
+        var input = angular.element('#fileInput');
+
+        if (input.length) {
+            input.click();
+        }
+    };
+
+    $scope.save = function () {
 
         var f = document.getElementById('file').files[0],
             r = new FileReader();
@@ -60,7 +67,7 @@ app.controller('addPointModalController', ['$scope', 'baseRest', '$uibModal', fu
 app.controller('homeController', ['$scope', function ($scope) {}]);
 'use strict';
 
-app.controller('mapController', ['$scope', 'baseRest', '$uibModal', function ($scope, baseRest, $uibModal) {
+app.controller('mapController', ['$scope', 'baseRest', '$mdDialog', function ($scope, baseRest, $mdDialog) {
 
     var center = [8.516634, 47.400547];
 
@@ -95,17 +102,10 @@ app.controller('mapController', ['$scope', 'baseRest', '$uibModal', function ($s
 
         var openPointConfiguration = function () {
 
-            var modalInstance = $uibModal.open({
-                animation: true,
+            $mdDialog.show({
                 templateUrl: '../partials/add-point-modal.html',
                 controller: 'addPointModalController'
             });
-
-            modalInstance.result.then(function (selectedItem) {
-                $scope.selected = selectedItem;
-            }, function () {});
-
-            return modalInstance.result;
         }();
     });
 }]);
@@ -162,7 +162,7 @@ app.factory('baseRest', ['$http', function ($http) {
                 put: function put(params) {
                     return $http.put(baseUrl + params.url, { cache: false });
                 },
-                'delete': function _delete(params) {
+                delete: function _delete(params) {
                     return $http.delete(baseUrl + params.url, { cache: false });
                 }
             };

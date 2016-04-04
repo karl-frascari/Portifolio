@@ -1,14 +1,25 @@
-<div class="modal-header">
-    <h3 class="modal-title">Choose your image</h3> </div>
-<div class="modal-body">
-    <ul>
-          <input type="file" id="file" name="file"/>
-		  <br>
-		  <button ng-click="add()">Add</button>
-		  <p>{{data}}</p>
-    </ul>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="ok()">Save</button>
-    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+<div id="upload-photo-modal">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Upload your photo</h2>
+            <span flex="" class="flex"></span>
+            <button class="md-icon-button md-button md-ink-ripple" type="button" ng-transclude="" ng-click="cancel()">
+                <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog" class="ng-scope ng-isolate-scope" aria-hidden="true"></md-icon>
+            </button>
+        </div>
+    </md-toolbar>
+    <div class="modal-body">
+        <ul>
+            <input type="file" id="file" name="file" />
+            <br>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <md-button class="md-raised md-primary" ng-click="save()">
+            Save
+        </md-button>
+        <md-button class="md-raised md-secondary" ng-click="cancel()">
+            Cancel
+        </md-button>
+    </div>
 </div>

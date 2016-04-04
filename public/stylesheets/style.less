@@ -3,18 +3,21 @@ body {
     overflow: hidden;
 }
 
+ul {
+    margin: 0;
+    padding: 0;
+}
+
 section.home {
     .row {
         div {
             height: 50%;
             transition: all .5s ease-in-out;
-            cursor: pointer ;
-
-            i{
+            cursor: pointer;
+            i {
                 font-size: 5vw;
                 vertical-align: bottom;
             }
-
             label {
                 cursor: pointer;
                 color: white;
@@ -28,13 +31,18 @@ section.home {
                 -ms-transform: translateY(-50%);
                 transform: translateY(-50%);
             }
-
             &:hover {
                 transform: scale(1.05);
-                z-index:100;
+                z-index: 100;
             }
         }
-
-        
     }
 }
+
+
+#upload-photo-modal {
+    input:file{
+        margin-top:30px;
+    }
+}
+

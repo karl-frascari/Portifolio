@@ -1,6 +1,6 @@
-app.controller('mapController', ['$scope', 'baseRest', '$uibModal',
+app.controller('mapController', ['$scope', 'baseRest', '$mdDialog',
 
-    ($scope, baseRest, $uibModal) => {
+    ($scope, baseRest, $mdDialog) => {
 
         const center = [8.516634, 47.400547];
 
@@ -38,19 +38,11 @@ app.controller('mapController', ['$scope', 'baseRest', '$uibModal',
 
             let openPointConfiguration = (() => {
 
-                let modalInstance = $uibModal.open({
-                    animation: true,
+                $mdDialog.show({
                     templateUrl: '../partials/add-point-modal.html',
                     controller: 'addPointModalController'
                 });
 
-                modalInstance.result.then(function(selectedItem) {
-                    $scope.selected = selectedItem;
-                }, () => {
-
-                });
-
-                return modalInstance.result;
             })();
 
         });
