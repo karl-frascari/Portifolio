@@ -7,7 +7,7 @@ app.factory('baseRest', ['$http', function ($http) {
                     return $http.get(baseUrl + params.url, { cache: false });
                 },
                 post: function (params) {
-                    return $http.post(baseUrl + params.url, { cache: false });
+                    return $http.post(baseUrl + params.url, params.data,  { cache: false });
                 },
                 put: function (params) {
                     return $http.put(baseUrl + params.url, { cache: false });

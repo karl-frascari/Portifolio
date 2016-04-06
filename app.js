@@ -20,7 +20,7 @@ mongoose.connect('mongodb://localhost/portifolio', function(err, db) {
 var app = express();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(logger('dev'));
 

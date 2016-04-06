@@ -1,6 +1,6 @@
-app.controller('addPointModalController', ['$scope', 'baseRest', '$mdDialog',
+app.controller('addPointModalController', ['$scope', 'baseRest', '$mdDialog', 'pointLocation',
 
-    ($scope, baseRest, $mdDialog) => {
+    ($scope, baseRest, $mdDialog, pointLocation) => {
 
         $scope.data = 'none';
 
@@ -8,14 +8,7 @@ app.controller('addPointModalController', ['$scope', 'baseRest', '$mdDialog',
 
         const mapApi = baseRest.dataService('http://' + baseUrl + '/map');
 
-        $scope.findFile = () => {
-
-            let input = angular.element('#fileInput');
-
-            if (input.length) {
-                input.click();
-            }
-        };
+        console.log(pointLocation);
 
         $scope.save = () => {
 
@@ -26,14 +19,16 @@ app.controller('addPointModalController', ['$scope', 'baseRest', '$mdDialog',
 
                 let dataToSend = {
                     base64: btoa(e.target.result),
-                    position: '[0,0]'
+                    position: pointLocation
                 };
 
                 mapApi.post({
                     url: '/point',
-                    data: dataToSend
+                    data: dataToSend,
+                    cache: false,
+                    dataType: 'json',
                 }).then(data => {
-                    console.log(data);
+                     $mdDialog.hide();
                 }, (data) => {
                     console.log(data);
                 });

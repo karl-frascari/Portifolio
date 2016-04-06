@@ -32,6 +32,6 @@ section.home .row div:hover {
   transform: scale(1.05);
   z-index: 100;
 }
-#upload-photo-modal input:file {
+#upload-photo-modal .modal-body ul input {
   margin-top: 30px;
 }
