@@ -1,88 +1,26 @@
-app.controller('mapController', ['$scope', 'baseRest', '$mdDialog',
+app.controller('mapController', ['$scope', 'baseRest', '$mdDialog', 'classService',
 
-    ($scope, baseRest, $mdDialog) => {
+    ($scope, baseRest, $mdDialog, classService) => {
 
-        class Ol3Map {
-
-            constructor() {
-                this.center = [8.516634, 47.400547];
-                this.vectorSource = new ol.source.Vector();
-            };
-
-            generateDefaulMap() {
-                this.ol3Map = new ol.Map({
-                    target: 'map-container',
-                    layers: [
-                        new ol.layer.Tile({
-                            source: new ol.source.BingMaps({
-                                key: 'ArYNk6ctSK_yhatijpSWHS6bNQnA1zCQc6ETg1gT49T4qP30C7EhFRl09JejztFl',
-                                imagerySet: 'Aerial'
-                            })
-                        }),
-                        new ol.layer.Vector({
-                            source: this.vectorSource
-                        })
-                    ],
-
-                    view: new ol.View({
-                        center: ol.proj.fromLonLat(map.center),
-                        zoom: 5,
-                        enableRotation: false,
-                    })
-                });
-            };
-
-            getMap() {
-                return this.ol3Map;
-            };
-
-            setMapListener(action, fn) {
-                this.getMap().on(action, fn);
-            };
-
-            getVectorSource() {
-                return this.vectorSource;
-            };
-
-            addPoint(coordinates) {
-
-                let iconFeature = new ol.Feature({
-                    geometry: new ol.geom.Point( 
-                                                JSON.parse("[" + coordinates + "]") || [-14675.90943075344, 5814106.119483646]),
-                });
-
-                let iconStyle = new ol.style.Style({
-                    image: new ol.style.Icon(({
-                        anchor: [0.5, 46],
-                        anchorXUnits: 'fraction',
-                        anchorYUnits: 'pixels',
-                        opacity: 1,
-                        scale: 0.5,
-                        src: 'http://mubs.edu.lb/Images/mapindicator.png'
-                    }))
-                });
-
-                iconFeature.setStyle(iconStyle);
-
-                this.vectorSource.addFeature(iconFeature);
-            };
-
-        };
-
-        const map = new Ol3Map();
-        map.generateDefaulMap();
-
+        const map = new classService.ol3MapInstace();
         const baseUrl = window.location.host;
         const mapApi = baseRest.dataService('http://' + baseUrl + '/map');
+
+        map.generateDefaulMap();
 
         mapApi.get({ url: '/points' }).then(data => {
 
             _(data.data).each(point => {
-                map.addPoint(point.position);
+                if (point.position) {
+                    map.addPoint(point.position);
+                }
             });
         });
 
         map.setMapListener('click', evt => {
+
+            var prettyCoord = ol.coordinate.toStringHDMS(ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326'), 2);
+            popup.show(evt.coordinate, '<div><h2>Coordinates</h2><p>' + prettyCoord + '</p></div>');
 
             let openPointConfiguration = (() => {
 
@@ -95,7 +33,7 @@ app.controller('mapController', ['$scope', 'baseRest', '$mdDialog',
                 });
 
             })();
-
         });
+
     }
 ]);
